@@ -1,0 +1,12 @@
+FROM mongo:latest
+
+# Expose the default MongoDB port
+EXPOSE 27017
+
+# Set the default database name
+ENV MONGO_INITDB_DATABASE=sps-crud
+
+# The data will be persisted in a volume
+VOLUME ["/data/db"]
+
+CMD ["mongod"]
