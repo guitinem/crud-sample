@@ -1,0 +1,26 @@
+{
+  "name": "crud-app",
+  "version": "1.0.0",
+  "description": "Full-stack user management CRUD application",
+  "private": true,
+  "scripts": {
+    "install:all": "npm install && cd server && npm install && cd ../client && npm install",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd src && npm start",
+    "start": "npm run dev",
+    "seed": "cd server && npm run seed"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "keywords": [
+    "crud",
+    "react",
+    "express",
+    "jwt",
+    "mongodb"
+  ],
+  "author": "",
+  "license": "MIT"
+}
