@@ -4,19 +4,18 @@ const User = require("../models/User");
 
 const seedUsers = async () => {
   try {
+    console.log("Seeder process started...")
     await mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-
-    console.log("Conectado ao MongoDB");
 
     const adminExists = await User.findOne({ 
       email: "admin@spsgroup.com.br" 
     });
 
     if (adminExists) {
-      console.log("Usuário admin já existe!");
+      console.log("User already exists.");
       await mongoose.connection.close();
       return;
     }
@@ -28,18 +27,11 @@ const seedUsers = async () => {
       password: "1234",
     });
 
-    console.log("Usuário admin criado com sucesso!");
-    console.log({
-      id: adminUser._id,
-      name: adminUser.name,
-      email: adminUser.email,
-      type: adminUser.type,
-    });
 
     await mongoose.connection.close();
-    console.log("Seeder finalizado!");
+    console.log("Seeder process finished!");
   } catch (error) {
-    console.error("Erro ao executar seeder:", error.message);
+    console.error("Error running seeder:", error.message);
     process.exit(1);
   }
 };
