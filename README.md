@@ -2,6 +2,8 @@
 
 Sistema completo de gerenciamento de usuários com React + Material-UI no frontend e Node.js + Express + MongoDB no backend.
 
+Caso queira acessar online: https://crud-sample-plum.vercel.app/signin
+
 ---
 
 ## 📋 Requisitos
@@ -108,7 +110,8 @@ yarn test:coverage     # Com cobertura
 
 ### Testes
 - **Jest** - Framework de testes
-- **Supertest** - Testes de API
+- **Supertest** - Testes de API (backend)
+
 ---
 
 ## 📝 Funcionalidades
