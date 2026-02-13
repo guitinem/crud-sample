@@ -22,6 +22,7 @@ import {
   Snackbar,
   Alert,
   CircularProgress,
+  Tooltip,
 } from "@mui/material";
 import {
   Edit as EditIcon,
@@ -35,7 +36,9 @@ import UserService from "../services/UserService";
 
 function Users() {
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
+
+  const blockedEmail = "admin@spsgroup.com.br";
 
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -134,11 +137,15 @@ function Users() {
   };
 
   const handleDelete = async (userId) => {
-    if (window.confirm("Tem certeza que deseja deletar este usuário?")) {
+    const message = userId === user._id
+      ? "Você está prestes a deletar seu próprio usuário. Tem certeza que deseja continuar?"
+      : "Tem certeza que deseja deletar este usuário?";
+    if (window.confirm(message)) {
       try {
         await UserService.delete(userId);
         showSnackbar("Usuário deletado com sucesso", "success");
         loadUsers();
+        if (userId === user._id) handleLogout();
       } catch (error) {
         showSnackbar("Erro ao deletar usuário", "error");
       }
@@ -170,7 +177,10 @@ function Users() {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            SPS Group - Gerenciamento de Usuários
+            Crud Sample - Gerenciamento de Usuários
+          </Typography>
+          <Typography variant="body1" component="div" sx={{ mr: 2 }}>
+            {user?.name}
           </Typography>
           <Button
             color="inherit"
@@ -238,20 +248,30 @@ function Users() {
                         <TableCell>{user.name}</TableCell>
                         <TableCell>{user.email}</TableCell>
                         <TableCell align="right">
-                          <IconButton
-                            color="primary"
-                            onClick={() => handleOpenDialog(user)}
-                            size="small"
-                          >
-                            <EditIcon />
-                          </IconButton>
-                          <IconButton
-                            color="error"
-                            onClick={() => handleDelete(user._id)}
-                            size="small"
-                          >
-                            <DeleteIcon />
-                          </IconButton>
+                          <Tooltip title={user.email === blockedEmail ? "Ação não permitida para este email" : ""}>
+                            <span>
+                              <IconButton
+                                disabled={user.email === blockedEmail}
+                                color="primary"
+                                onClick={() => handleOpenDialog(user)}
+                                size="small"
+                              >
+                                <EditIcon />
+                              </IconButton>
+                            </span>
+                          </Tooltip>
+                          <Tooltip title={user.email === blockedEmail ? "Ação não permitida para este email" : ""}>
+                            <span>
+                              <IconButton
+                                disabled={user.email === blockedEmail}
+                                color="error"
+                                onClick={() => handleDelete(user._id)}
+                                size="small"
+                              >
+                                <DeleteIcon />
+                              </IconButton>
+                            </span>
+                          </Tooltip>
                         </TableCell>
                       </TableRow>
                     ))
@@ -320,6 +340,7 @@ function Users() {
         open={snackbar.open}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
+        direction="up"
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
       >
         <Alert

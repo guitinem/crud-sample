@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 class UserService {
   constructor() {
-    this.baseURL = "http://localhost:3000";
+    this.baseURL = process.env.REACT_APP_API_URL || "http://localhost:3000";
   }
 
   // Configura o header de autenticação

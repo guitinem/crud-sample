@@ -81,7 +81,7 @@ function SignIn() {
               gutterBottom
               sx={{ fontWeight: 700 }}
             >
-              SPS Group
+              Crud Sample
             </Typography>
             <Typography variant="body1" color="text.secondary">
               Sistema de Gerenciamento de Usuários
