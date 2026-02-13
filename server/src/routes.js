@@ -6,12 +6,14 @@ const authMiddleware = require("./middlewares/auth");
 const routes = Router();
 
 routes.get("/", (req, res) => {
-  res.json({ message: "API SPS - User Management" });
+  res.json({ message: "Crud Sample - User Management" });
 });
 
 routes.post("/auth/login", AuthController.login);
+
+// Rotas protegidas por autenticação
 routes.get("/me", authMiddleware, AuthController.me);
-routes.post("/users", UserController.store);
+routes.post("/users", authMiddleware, UserController.store);
 routes.get("/users", authMiddleware, UserController.index);
 routes.get("/users/:id", authMiddleware, UserController.show);
 routes.put("/users/:id", authMiddleware, UserController.update);

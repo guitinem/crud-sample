@@ -105,10 +105,12 @@ class UserController {
       }
 
       // Atualiza os campos
-      if (name) user.name = name;
-      if (email) user.email = email;
-      if (type) user.type = type;
-      if (password) user.password = password;
+      const allowedFields = ['name', 'email', 'type', 'password'];
+      allowedFields.forEach(field => {
+        if (req.body[field] !== undefined) {
+          user[field] = req.body[field];
+        }
+      });
 
       await user.save();
 

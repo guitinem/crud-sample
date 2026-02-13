@@ -43,7 +43,6 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-// Método para comparar senhas
 userSchema.methods.validatePassword = async function (candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
 };
