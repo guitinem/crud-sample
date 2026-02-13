@@ -1,13 +1,8 @@
 import React from "react";
+import { Navigate } from "react-router-dom";
 
 function Home() {
-  return (
-    <div>
-      <h1>SPS REACT TEST</h1>
-
-      <a href="/users">Usuários</a>
-    </div>
-  );
+  return <Navigate to="/users" replace />;
 }
 
 export default Home;

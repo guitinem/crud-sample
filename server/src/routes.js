@@ -9,7 +9,7 @@ routes.get("/", (req, res) => {
   res.json({ message: "API SPS - User Management" });
 });
 
-routes.post("/auth", AuthController.login);
+routes.post("/auth/login", AuthController.login);
 routes.get("/me", authMiddleware, AuthController.me);
 routes.post("/users", UserController.store);
 routes.get("/users", authMiddleware, UserController.index);
